@@ -25,10 +25,9 @@
 		<h3>Try to switch on/off your connection</h3>
 
 		<code id="request"></code>
-		<pre id="response"></pre>
 
-		<img id="image" width="300"/>
-
+		<h2 id="name"></h2>
+		<img id="image" width="200"/>
 
 
 		<script src="../magic-cache.js"></script>
@@ -37,7 +36,7 @@
 			var element = document.querySelector("#status");
 			var image = document.querySelector("#image");
 			var request = document.querySelector("#request");
-			var response = document.querySelector("#response");
+			var nameHeader = document.querySelector("#name");
 
 			MagicCache.init({
 				url: "../magic-cache-service-worker.js"
@@ -66,10 +65,15 @@
 
 				xhr.onreadystatechange = function() {
 					if (xhr.readyState == 4) {
-						var data = JSON.parse(xhr.responseText);
-						image.setAttribute("src", data.imageURI);
-						request.innerHTML = url + (MagicCache.isCached ? " (CACHED)" : "");
-						response.innerHTML = xhr.responseText;
+						try {
+							var data = JSON.parse(xhr.responseText);
+							var item = data.items[0];
+
+							image.setAttribute("src", item.owner.avatar_url);
+							request.innerHTML = url + (MagicCache.isCached ? " (CACHED)" : "");
+							nameHeader.innerHTML = item.name;
+						}catch (e){}
+
 						callback();
 					}
 				};
@@ -78,15 +82,21 @@
 			}
 
 
+			var URI = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=1";
+
 			var cursor = 0;
-			var list = ["requests/1.json", "requests/2.json", "requests/3.json"];
+			var list = [
+				URI+"&page=1",
+				URI+"&page=2",
+				URI+"&page=3"
+			];
 
 			function next() {
 				if (cursor >= list.length) {
 					cursor = 0;
 				}
 				sendXHR(list[cursor], function() {
-					setTimeout(next, 1000);
+					setTimeout(next, 4000);
 				});
 				cursor++;
 			}

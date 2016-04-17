@@ -2,9 +2,9 @@
 
 Tiny lib with _zero_ dependencies that can handle all `GET` requests, store them in Browser's Cache and return them back in case of connection issues (Offline, DNS Errors).
 
-<img src="https://cloud.githubusercontent.com/assets/584632/14588020/b89c2e6e-04e0-11e6-904d-91b7cc538030.gif" height="500"/>
+<img src="https://cloud.githubusercontent.com/assets/584632/14590104/aadf0a6a-0514-11e6-9b22-ad9a144e9731.gif"/>
 
-[This example](https://rawgit.com/pfrankov/magic-cache/master/example/example.html)
+[This DEMO example](https://rawgit.com/pfrankov/magic-cache/master/example/example.html)
 
 ## Limitations
 Cache API is available over *HTTPS* only. Time to switch to HTTPS!  
@@ -78,7 +78,3 @@ if (MagicCache.isCached) {
     alert("Oh, no!");
 }
 ```
-
-## Known issues
-- [ ] On Android devices `onCached`/`onOnline` is not working. Need to investigate.
-- [ ] For some reason images from `rawgit.com` is not cached.
