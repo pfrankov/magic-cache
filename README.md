@@ -24,6 +24,21 @@ Then just copy `magic-cache-service-worker.js` to the root directory of your sit
 
 ## Usage
 
+#### `init(options)`
+
+Initializer. MagicCache will not work without it.  
+Can be executed only once.
+
+```js
+MagicCache.init();
+
+// is the same as
+
+MagicCache.init({
+    url: "/magic-cache-service-worker.js"
+});
+```
+
 ### Methods
 
 #### `onCached(callback)`
@@ -52,11 +67,11 @@ var cancelHandler = MagicCache.onOnline(function(){
 // cancelHandler(); to obviously cancel the handler 
 ```
 
-### Attributes
+### Properties
 
 #### `isCached`
 
-`Boolean`. Helps to understand what's going on.
+`Boolean`. Helps to understand what's going on in this particular moment.
 
 ```js
 if (MagicCache.isCached) {

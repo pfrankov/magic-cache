@@ -39,6 +39,10 @@
 			var request = document.querySelector("#request");
 			var response = document.querySelector("#response");
 
+			MagicCache.init({
+				url: "../magic-cache-service-worker.js"
+			});
+
 
 			MagicCache.onCached(function() {
 				element.innerHTML = "From cache";

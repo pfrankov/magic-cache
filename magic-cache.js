@@ -44,35 +44,49 @@
 		}
 
 
-		if ("serviceWorker" in navigator) {
-			navigator.serviceWorker.addEventListener("message", function(event) {
-				if (event.data && event.data.type) {
-					if (event.data.isCached) {
-						onCachedListeners.forEach(function(listener) {
-							listener();
-						});
-					}else {
-						onOnlineListeners.forEach(function(listener) {
-							listener();
-						});
+		var alreadyInitialized = false;
+		
+		/**
+		 * @methodOf MagicCache
+		 * @param {object=} options
+		 * @param {string} options.url 	relative url to `magic-cache-service-worker.js`
+		 */
+		this.init = function(options) {
+			if (alreadyInitialized) {
+				return;
+			}
+			alreadyInitialized = true;
+			
+			if ("serviceWorker" in navigator) {
+				navigator.serviceWorker.addEventListener("message", function(event) {
+					if (event.data && event.data.type) {
+						if (event.data.isCached) {
+							onCachedListeners.forEach(function(listener) {
+								listener();
+							});
+						}else {
+							onOnlineListeners.forEach(function(listener) {
+								listener();
+							});
+						}
+
+						_instance.isCached = event.data.isCached;
 					}
-
-					_instance.isCached = event.data.isCached;
-				}
-			});
-
-			navigator.serviceWorker.register("/magic-cache-service-worker.js", {scope: "./"})
-				.then(function(registration) {
-					return registration.pushManager.getSubscription()
-						.then(function(subscription) {
-							if (subscription) {
-								return subscription;
-							}
-
-							return registration.pushManager.subscribe({userVisibleOnly: true});
-						});
 				});
-		}
+
+				navigator.serviceWorker.register(options.url || "/magic-cache-service-worker.js", {scope: "./"})
+					.then(function(registration) {
+						return registration.pushManager.getSubscription()
+							.then(function(subscription) {
+								if (subscription) {
+									return subscription;
+								}
+
+								return registration.pushManager.subscribe({userVisibleOnly: true});
+							});
+					});
+			}
+		};
 
 
 		/**
