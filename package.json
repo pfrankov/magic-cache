@@ -1,0 +1,23 @@
+{
+  "name": "magic-cache",
+  "version": "1.0.0",
+  "description": "Tiny lib with zero dependencies that can handle all GET requests, store them in Browser's Cache and return them back in case of connection issues.",
+  "main": "magic-cache.js",
+  "files": ["magic-cache-service-worker.js", "magic-cache.js"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pfrankov/magic-cache.git"
+  },
+  "keywords": [
+    "magic cache",
+    "service worker",
+    "offline",
+    "cache"
+  ],
+  "author": "Pavel Frankov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pfrankov/magic-cache/issues"
+  },
+  "homepage": "https://github.com/pfrankov/magic-cache#readme"
+}

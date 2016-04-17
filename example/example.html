@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Magic Cache Example</title>
+	</head>
+	<body>
+		<style>
+			body {
+				font-family: sans-serif;
+				padding: 20px 50px;
+			}
+
+			.isOnline {
+				color: #0c0;
+			}
+			.isCached {
+				color: #c00;
+			}
+		</style>
+
+
+		<h2 id="status">Status</h2>
+
+		<h3>Try to switch on/off your connection</h3>
+
+		<code id="request"></code>
+		<pre id="response"></pre>
+
+		<img id="image" width="300"/>
+
+
+
+		<script src="../magic-cache.js"></script>
+
+		<script>
+			var element = document.querySelector("#status");
+			var image = document.querySelector("#image");
+			var request = document.querySelector("#request");
+			var response = document.querySelector("#response");
+
+
+			MagicCache.onCached(function() {
+				element.innerHTML = "From cache";
+				element.className = "isCached";
+			});
+
+			MagicCache.onOnline(function() {
+
+				// It will executed immediately
+				element.innerHTML = "From server";
+				element.className = "isOnline";
+			});
+
+
+
+
+
+			function sendXHR(url, callback) {
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", url, true);
+
+				xhr.onreadystatechange = function() {
+					if (xhr.readyState == 4) {
+						var data = JSON.parse(xhr.responseText);
+						image.setAttribute("src", data.imageURI);
+						request.innerHTML = url + (MagicCache.isCached ? " (CACHED)" : "");
+						response.innerHTML = xhr.responseText;
+						callback();
+					}
+				};
+
+				xhr.send();
+			}
+
+
+			var cursor = 0;
+			var list = ["requests/1.json", "requests/2.json", "requests/3.json"];
+
+			function next() {
+				if (cursor >= list.length) {
+					cursor = 0;
+				}
+				sendXHR(list[cursor], function() {
+					setTimeout(next, 1000);
+				});
+				cursor++;
+			}
+
+			setTimeout(next, 2000);
+
+		</script>
+	</body>
+</html>
