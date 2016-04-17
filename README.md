@@ -78,3 +78,7 @@ if (MagicCache.isCached) {
     alert("Oh, no!");
 }
 ```
+
+## Known issues
+- [ ] On Android devices `onCached`/`onOnline` is not working. Need to investigate.
+- [ ] For some reason images from `rawgit.com` is not cached.
