@@ -56,6 +56,8 @@
 				return;
 			}
 			alreadyInitialized = true;
+
+			options = options || {};
 			
 			if ("serviceWorker" in navigator) {
 				navigator.serviceWorker.addEventListener("message", function(event) {

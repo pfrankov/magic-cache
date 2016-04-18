@@ -1,6 +1,7 @@
 # Magic Cache
 
-Tiny lib with _zero_ dependencies that can handle all `GET` requests, store them in Browser's Cache and return them back in case of connection issues (Offline, DNS Errors).
+Tiny lib with _zero_ dependencies that can handle all `GET` requests, store them in Browser's Cache and return them back in case of connection issues (Offline, DNS Errors).  
+It's so simple to make your site available in offline as never before.
 
 <img src="https://cloud.githubusercontent.com/assets/584632/14590104/aadf0a6a-0514-11e6-9b22-ad9a144e9731.gif"/>
 
@@ -9,7 +10,7 @@ Tiny lib with _zero_ dependencies that can handle all `GET` requests, store them
 ## Limitations
 Cache API is available over *HTTPS* only. Time to switch to HTTPS!  
 Chrome 40+ / Firefox 44+ / Opera 24+ / Chrome for Android 49+  
-Working on _Service Workers_ still in progress. _For now_ there can be only one _Service Worker_. It should be changed in near future.  
+Working on _Service Workers_ still in progress. _For now_ there can be only one _Service Worker_. It should be changed in near future.
 So if you use SW already - you will not be able to use the MagicCache.
 
 ## Installation
@@ -19,8 +20,8 @@ npm install --save git://github.com/pfrankov/magic-cache
 # or
 git clone https://github.com/pfrankov/magic-cache
 ```
-Then just copy `magic-cache-service-worker.js` to the root directory of your site.
-
+Then just copy `magic-cache-service-worker.js` to the root directory of your site.  
+Almost done. Now we need only one line of initializing code:
 
 ## Usage
 
