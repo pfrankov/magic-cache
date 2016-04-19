@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>Magic Cache Example</title>
+		<title>MagicCache Example</title>
 	</head>
 	<body>
 		<style>
@@ -33,26 +33,26 @@
 		<script src="../magic-cache.js"></script>
 
 		<script>
-			var element = document.querySelector("#status");
+			var status = document.querySelector("#status");
 			var image = document.querySelector("#image");
 			var request = document.querySelector("#request");
 			var nameHeader = document.querySelector("#name");
 
 			MagicCache.init({
-				url: "../magic-cache-service-worker.js"
+				url: "../sw.js"
 			});
 
 
 			MagicCache.onCached(function() {
-				element.innerHTML = "From cache";
-				element.className = "isCached";
+				status.innerHTML = "From cache";
+				status.className = "isCached";
 			});
 
 			MagicCache.onOnline(function() {
 
 				// It will executed immediately
-				element.innerHTML = "From server";
-				element.className = "isOnline";
+				status.innerHTML = "From server";
+				status.className = "isOnline";
 			});
 
 

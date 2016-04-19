@@ -1,9 +1,9 @@
 {
   "name": "magic-cache",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Tiny lib with zero dependencies that can handle all GET requests, store them in Browser's Cache and return them back in case of connection issues.",
-  "main": "magic-cache.js",
-  "files": ["magic-cache-service-worker.js", "magic-cache.js"],
+  "main": "index.js",
+  "files": ["magic-cache-sw.js", "magic-cache.js"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pfrankov/magic-cache.git"

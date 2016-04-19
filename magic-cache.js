@@ -1,14 +1,14 @@
 "use strict";
 
 (function (root, factory) {
-	if (typeof module === 'object' && module.exports) {
+	if (typeof module === "object" && module.exports) {
 		module.exports = factory();
-	} else if (typeof define === 'function' && define.amd) {
+	} else if (typeof define === "function" && define.amd) {
 		define([], factory);
 	} else {
 		root.MagicCache = factory();
 	}
-}(this, function () {
+})(this, function () {
 	/**
 	 * @constructor
 	 */
@@ -49,7 +49,7 @@
 		/**
 		 * @methodOf MagicCache
 		 * @param {object=} options
-		 * @param {string} options.url 	relative url to `magic-cache-service-worker.js`
+		 * @param {string} options.url 	relative url to `sw.js`
 		 */
 		this.init = function(options) {
 			if (alreadyInitialized) {
@@ -76,7 +76,7 @@
 					}
 				});
 
-				navigator.serviceWorker.register(options.url || "/magic-cache-service-worker.js", {scope: "./"})
+				navigator.serviceWorker.register(options.url || "/sw.js")
 					.then(function(registration) {
 						return registration.pushManager.getSubscription()
 							.then(function(subscription) {
@@ -116,4 +116,4 @@
 	};
 
 	return new MagicCache;
-}));
+});

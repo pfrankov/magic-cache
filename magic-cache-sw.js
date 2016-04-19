@@ -1,4 +1,10 @@
-(function() {
+(function (root, factory) {
+	if (typeof module === "object" && module.exports) {
+		module.exports = factory;
+	} else {
+		factory();
+	}
+})(this, function () {
 	var CACHE_KEY = "magic-cache";
 
 	var isCachedOld;
@@ -61,4 +67,4 @@
 		event.waitUntil(caches.delete(CACHE_KEY));
 		event.waitUntil(self.clients.claim());
 	});
-})();
+});
