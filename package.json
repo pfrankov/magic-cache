@@ -1,6 +1,6 @@
 {
   "name": "magic-cache",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Tiny lib with zero dependencies that can handle all GET requests, store them in Browser's Cache and return them back in case of connection issues.",
   "main": "index.js",
   "files": ["magic-cache-sw.js", "magic-cache.js", "sw.js"],

@@ -1,4 +1,5 @@
 # Magic Cache
+[![npm version](https://badge.fury.io/js/magic-cache.svg)](https://www.npmjs.com/package/magic-cache)
 
 Tiny lib with _zero_ dependencies that can handle all `GET` requests, store them in Browser's Cache and return them back in case of connection issues (Offline, DNS Errors).  
 It's so simple to make your site available in offline as never before.
