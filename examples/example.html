@@ -33,26 +33,27 @@
 		<script src="../magic-cache.js"></script>
 
 		<script>
-			var status = document.querySelector("#status");
-			var image = document.querySelector("#image");
-			var request = document.querySelector("#request");
-			var nameHeader = document.querySelector("#name");
+			var $status = document.querySelector("#status");
+			var $image = document.querySelector("#image");
+			var $request = document.querySelector("#request");
+			var $nameHeader = document.querySelector("#name");
 
 			MagicCache.init({
 				url: "../sw.js"
+				//forceReload: true
 			});
 
 
 			MagicCache.onCached(function() {
-				status.innerHTML = "From cache";
-				status.className = "isCached";
+				$status.innerHTML = "From cache";
+				$status.className = "isCached";
 			});
 
 			MagicCache.onOnline(function() {
 
 				// It will executed immediately
-				status.innerHTML = "From server";
-				status.className = "isOnline";
+				$status.innerHTML = "From server";
+				$status.className = "isOnline";
 			});
 
 
@@ -69,9 +70,9 @@
 							var data = JSON.parse(xhr.responseText);
 							var item = data.items[0];
 
-							image.setAttribute("src", item.owner.avatar_url);
-							request.innerHTML = url + (MagicCache.isCached ? " (CACHED)" : "");
-							nameHeader.innerHTML = item.name;
+							$image.setAttribute("src", item.owner.avatar_url);
+							$request.innerHTML = url + (MagicCache.isCached ? " (CACHED)" : "");
+							$nameHeader.innerHTML = item.name;
 						}catch (e){}
 
 						callback();
@@ -100,6 +101,13 @@
 				});
 				cursor++;
 			}
+
+			// Precache 3rd page from the beginning and 4th to simply indicate that it works
+			MagicCache.add([URI + "&page=3", URI + "&page=4"]);
+
+			setTimeout(function() {
+				MagicCache.remove([URI + "&page=4"]);
+			}, 10000);
 
 			setTimeout(next, 2000);
 

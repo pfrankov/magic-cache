@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import {MagicCache} from 'magic-cache';
+import React, { Component } from "react";
+import {MagicCache} from "magic-cache";
 
 export default class App extends Component {
   constructor(props) {
@@ -23,46 +23,53 @@ export default class App extends Component {
     MagicCache.onOnline(this.onOnline.bind(this));
 
     function sendXHR(url, callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", url, true);
 
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4) {
-            try {
-              var data = JSON.parse(xhr.responseText);
-              var item = data.items[0];
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          try {
+            var data = JSON.parse(xhr.responseText);
+            var item = data.items[0];
 
-              self.setState({image: item.owner.avatar_url});
-              self.setState({request: url + (MagicCache.isCached ? " (CACHED)" : "")});
-              self.setState({name: item.name});
-            }catch (e){}
-            callback();
-          }
-        };
-
-        xhr.send();
-      }
-
-      var URI = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=1";
-
-      var cursor = 0;
-      var list = [
-        URI+"&page=1",
-        URI+"&page=2",
-        URI+"&page=3"
-      ];
-
-      function next() {
-        if (cursor >= list.length) {
-          cursor = 0;
+            self.setState({image: item.owner.avatar_url});
+            self.setState({request: url + (MagicCache.isCached ? " (CACHED)" : "")});
+            self.setState({name: item.name});
+          }catch (e){}
+          callback();
         }
-        sendXHR(list[cursor], function() {
-          setTimeout(next, 4000);
-        });
-        cursor++;
-      }
+      };
 
-      setTimeout(next, 2000);
+      xhr.send();
+    }
+
+    var URI = "https://api.github.com/search/repositories?q=language:javascript&sort=stars&order=desc&per_page=1";
+
+    var cursor = 0;
+    var list = [
+      URI+"&page=1",
+      URI+"&page=2",
+      URI+"&page=3"
+    ];
+
+    function next() {
+      if (cursor >= list.length) {
+        cursor = 0;
+      }
+      sendXHR(list[cursor], function() {
+        setTimeout(next, 4000);
+      });
+      cursor++;
+    }
+
+    // Precache 3rd page from the beginning and 4th to simply indicate that it works
+    MagicCache.add([URI + "&page=3", URI + "&page=4"]);
+
+    setTimeout(function() {
+      MagicCache.remove([URI + "&page=4"]);
+    }, 10000);
+
+    setTimeout(next, 2000);
   }
 
   render() {

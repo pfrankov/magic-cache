@@ -62,6 +62,62 @@
 		}
 	});
 
+
+	self.addEventListener("message", function(event) {
+		if (event.data && event.data.type === "magic-cache") {
+
+			////////////
+			/// ADD ////
+			////////////
+			var adding = [];
+
+			try {
+				adding = JSON.parse(event.data.add);
+			}catch(e){}
+
+			if (adding && adding instanceof Array) {
+				caches.open(CACHE_KEY)
+					.then(function(cache) {
+						var addingRequests = adding.map(function(el) {
+							if (el === Object(el) && "url" in el) {
+								return new Request(el.url, el);
+							}
+
+							return el;
+						});
+
+						cache.addAll(addingRequests);
+					});
+			}
+
+			///////////////
+			/// REMOVE ////
+			///////////////
+			var removing = [];
+			try {
+				removing = JSON.parse(event.data.remove);
+			}catch(e){}
+
+			if (removing && removing instanceof Array) {
+				caches.open(CACHE_KEY)
+					.then(function(cache) {
+						removing.forEach(function(remove) {
+							if (remove === Object(remove) && "url" in remove) {
+								remove = new Request(remove.url, remove);
+							}
+
+							cache.matchAll(remove)
+								.then(function(matched) {
+									matched.forEach(function(key) {
+										cache.delete(key.url);
+									});
+								});
+						});
+					});
+			}
+		}
+	});
+
 	self.addEventListener("activate", function(event) {
 		// Destroy the cache
 		event.waitUntil(caches.delete(CACHE_KEY));
