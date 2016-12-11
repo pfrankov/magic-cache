@@ -40,7 +40,7 @@
     "webpack-dev-server": "^1.12.1"
   },
   "dependencies": {
-    "magic-cache": "^2.0.0",
+    "magic-cache": "^2.1.1",
     "react": "^0.14.6",
     "react-dom": "^0.14.6"
   }

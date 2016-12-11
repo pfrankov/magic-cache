@@ -123,4 +123,8 @@
 		event.waitUntil(caches.delete(CACHE_KEY));
 		event.waitUntil(self.clients.claim());
 	});
+
+	self.addEventListener("install", function(event) {
+		event.waitUntil(self.skipWaiting());
+	});
 });
